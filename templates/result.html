@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>API Result</title>
+	<!-- Add the Tailwind CSS CDN link -->
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-4">
+	<div class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+		<div class="bg-gray-200 text-gray-700 uppercase text-lg font-bold p-3">API Result</div>
+		<div class="p-4">
+			{% for set_name, set_data in response['buildable_sets'].items() %}
+				<p>{{ set_name }}</p>
+			{% endfor %}
+		</div>
+		<a href="/" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded block text-center">Back to Users</a>
+	</div>
+</body>
+</html>

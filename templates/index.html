@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>List of Users</title>
+    <!-- Add the Tailwind CSS CDN link -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        // Get the list of users and the form
+        const userList = document.querySelectorAll(".user");
+        const form = document.querySelector("form");
+
+        // Add a click event listener to each user
+        userList.forEach((user) => {
+          user.addEventListener("click", () => {
+            // Set the hidden input field to the selected username
+            const usernameInput = document.querySelector(
+              'input[name="username"]'
+            );
+            usernameInput.value = user.innerText;
+
+            // Enable the buttons
+            const buttons = form.querySelectorAll("button");
+            buttons.forEach((button) => {
+              button.disabled = false;
+            });
+          });
+        });
+      });
+    </script>
+    <script>
+        let selectedUser = null;
+        function selectUser(user) {
+          if (selectedUser) {
+            selectedUser.classList.remove("bg-yellow-100");
+          }
+          selectedUser = user;
+          selectedUser.classList.add("bg-yellow-100");
+        }
+      </script>
+  </head>
+  <body class="p-4">
+    <div class="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="bg-gray-200 text-gray-700 uppercase text-lg font-bold p-3">
+        List of Users
+      </div>
+      <ul class="divide-y divide-gray-200">
+        {% for username in usernames %}
+        <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer user" onclick="selectUser(this)">{{ username }}</li>
+        {% endfor %}
+      </ul>
+      <form
+        class="p-3 flex justify-between items-center"
+        method="POST"
+        action="/result"
+      >
+        <input type="hidden" name="username" />
+        <div class="flex flex-col w-full">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2 cursor-pointer"
+          type="submit"
+          name="button"
+          value="buildable_sets"
+          disabled
+        >
+          Find buildable sets
+        </button>
+        <button
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded my-2 cursor-pointer"
+          type="submit"
+          name="button"
+          value="flexible_sets"
+          disabled
+        >
+          Find buildable sets with other colors
+        </button>
+        <div>
+      </form>
+    </div>
+  </body>
+</html>
+  

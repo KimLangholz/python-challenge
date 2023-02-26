@@ -93,9 +93,9 @@ class TestSortUserInventory(unittest.TestCase):
 
 class TestCanBuildSet(unittest.TestCase):
 
-    def test_can_build_set_returns_true_for_valid_inventory(self):
+    def test_user_can_build_set_returns_true_for_valid_inventory(self):
         """
-        Test that the can_build_set function returns True when given a user inventory matching the required lego bricks in a set.
+        Test that the user_can_build_set function returns True when given a user inventory matching the required lego bricks in a set.
 
         The function should take a user inventory dictionary that maps design IDs to material and quantities, 
         and a list of lego bricks, where each lego brick is a dictionary that specifies a design ID, the required material/color, 
@@ -119,12 +119,12 @@ class TestCanBuildSet(unittest.TestCase):
             {'part': {'designID': '5678', 'material': 3}, 'quantity': 1},
         ]
 
-        self.assertTrue(can_build_set(
+        self.assertTrue(user_can_build_set(
             user_inventory, lego_bricks_in_set))
 
-    def test_can_build_set_returns_false_for_insufficient_quantity(self):
+    def test_user_can_build_set_returns_false_for_insufficient_quantity(self):
         """
-        Test that the can_build_set function returns False when given a user inventory doesn't have the quantities of a lego brick required in a set.
+        Test that the user_can_build_set function returns False when given a user inventory doesn't have the quantities of a lego brick required in a set.
 
         The function should take a user inventory dictionary that maps design IDs to material and quantities, 
         and a list of lego bricks, where each lego brick is a dictionary that specifies a design ID, the required material/color, 
@@ -148,12 +148,12 @@ class TestCanBuildSet(unittest.TestCase):
             {'part': {'designID': '5678', 'material': 3}, 'quantity': 1},
         ]
 
-        self.assertFalse(can_build_set(
+        self.assertFalse(user_can_build_set(
             user_inventory, lego_bricks_in_set))
 
-    def test_can_build_set_returns_false_for_missing_color(self):
+    def test_user_can_build_set_returns_false_for_missing_color(self):
         """
-        Test that the can_build_set function returns False when given a user inventory doesn't have a brick in the needed color required in a set.
+        Test that the user_can_build_set function returns False when given a user inventory doesn't have a brick in the needed color required in a set.
 
         The function should take a user inventory dictionary that maps design IDs to material and quantities, 
         and a list of lego bricks, where each lego brick is a dictionary that specifies a design ID, the required material/color, 
@@ -177,27 +177,27 @@ class TestCanBuildSet(unittest.TestCase):
             {'part': {'designID': '5678', 'material': 4}, 'quantity': 1},
         ]
 
-        self.assertFalse(can_build_set(
+        self.assertFalse(user_can_build_set(
             user_inventory, lego_bricks_in_set))
 
 
-def test_can_build_set_if_colors_are_changeable():
+def test_user_can_build_set_if_colors_are_changeable():
     """
-    Test function for the can_build_set_if_colors_are_changeable() function.
+    This function tests the behavior of user_can_build_set_if_colors_are_changeable() with different inputs. It tests cases 
+    where the function should return False (i.e., the user has enough LEGO bricks of the required design ID and color so no 
+    substitution is required), cases where the function should return False (i.e., the user does not have enough LEGO bricks 
+    of the required design ID or the required color), and cases where the function should return True because the user has 
+    enough LEGO bricks of the required design ID but not of the required color, and color substitutions are allowed and possible.
 
-    This function tests the behavior of the can_build_set_if_colors_are_changeable() function with different inputs.
-    The can_build_set_if_colors_are_changeable() function takes two arguments: a dictionary representing the user's inventory
-    of LEGO bricks, and a list of dictionaries representing the LEGO bricks required to build a set. Each dictionary in the list
-    contains a 'part' key, which has a dictionary value containing a 'designID' key (a string representing the design ID of
-    the LEGO brick) and a 'material' key (a string representing the color of the LEGO brick), and a 'quantity' key (an integer
-    representing the number of LEGO bricks required).
+    Args:
+        user_inventory (Dict[str, Dict[str, int]]): A dictionary representing the user's inventory of LEGO bricks.
+        lego_bricks_in_set (List[Dict]): A list of dictionaries representing the LEGO bricks required to build a set.
 
-    This function tests the can_build_set_if_colors_are_changeable() function with various inputs and asserts that the
-    function returns the expected output for each input. Specifically, it tests cases where the function should return False
-    (i.e., the user has enough LEGO bricks of the required design ID and color so no substitution is required), cases where 
-    the function should return False (i.e., the user does not have enough LEGO bricks of the required design ID or the required 
-    color), and cases where the function should return True because the user has enough LEGO bricks of the required design ID 
-    but not of the required color, and color substitutions are allowed and possible.
+    Returns:
+        None.
+
+    Raises:
+        AssertionError: If the function returns unexpected output for any of the tested inputs.
     """
 
     user_inventory = {
@@ -214,8 +214,8 @@ def test_can_build_set_if_colors_are_changeable():
         {"part": {"designID": "3005", "material": "1"}, "quantity": 4},
     ]
 
-    assert can_build_set(user_inventory, lego_bricks_in_set) == True
-    assert can_build_set_if_colors_are_changeable(
+    assert user_can_build_set(user_inventory, lego_bricks_in_set) == True
+    assert user_can_build_set_if_colors_are_changeable(
         user_inventory, lego_bricks_in_set) == False
 
     lego_bricks_in_set = [
@@ -225,8 +225,8 @@ def test_can_build_set_if_colors_are_changeable():
         {"part": {"designID": "3005", "material": "1"}, "quantity": 4},
     ]
 
-    assert can_build_set(user_inventory, lego_bricks_in_set) == False
-    assert can_build_set_if_colors_are_changeable(
+    assert user_can_build_set(user_inventory, lego_bricks_in_set) == False
+    assert user_can_build_set_if_colors_are_changeable(
         user_inventory, lego_bricks_in_set) == True
 
     lego_bricks_in_set = [
@@ -236,8 +236,8 @@ def test_can_build_set_if_colors_are_changeable():
         {"part": {"designID": "3005", "material": "0"}, "quantity": 12},
     ]
 
-    assert can_build_set(user_inventory, lego_bricks_in_set) == False
-    assert can_build_set_if_colors_are_changeable(
+    assert user_can_build_set(user_inventory, lego_bricks_in_set) == False
+    assert user_can_build_set_if_colors_are_changeable(
         user_inventory, lego_bricks_in_set) == True
 
     user_inventory = {}
@@ -248,8 +248,8 @@ def test_can_build_set_if_colors_are_changeable():
         {"part": {"designID": "3005", "material": "1"}, "quantity": 4},
     ]
 
-    assert can_build_set(user_inventory, lego_bricks_in_set) == False
-    assert can_build_set_if_colors_are_changeable(
+    assert user_can_build_set(user_inventory, lego_bricks_in_set) == False
+    assert user_can_build_set_if_colors_are_changeable(
         user_inventory, lego_bricks_in_set) == False
 
 
