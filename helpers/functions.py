@@ -190,13 +190,13 @@ def user_can_build_set_if_colors_are_changeable(user_inventory, lego_bricks_in_s
                 return False
 
     # helping function if we want to see the bricks being substituted.
-    # print_substitutions(lego_bricks_in_set, substitutions)
+    #print_substitutions_to_file(lego_bricks_in_set, substitutions)
     return True
 
 
-def print_substitutions(lego_bricks: Dict, substitutions: Dict):
+def print_substitutions_to_file(lego_bricks: Dict, substitutions: Dict):
     """
-    Prints a list of substitutions made for each building block in the set.
+    Prints a list of substitutions made for each lego brick in the set.
 
     Args:
     - lego_bricks: A dictionary containing the Lego bricks of the Lego set, with each item
@@ -208,9 +208,9 @@ def print_substitutions(lego_bricks: Dict, substitutions: Dict):
     Returns:
     - None
     """
-    for building_block in lego_bricks:
-        lego_brick = LegoBrick(building_block['part']['designID'], str(
-            building_block['part']['material']), building_block['quantity'])
-        if lego_brick.color in substitutions:
-            print(
-                f"{lego_brick.quantity} x {lego_brick.color} (substituted with {substitutions[lego_brick.color]})")
+    with open('substitutions.txt', 'w') as f:
+        for building_block in lego_bricks:
+            lego_brick = LegoBrick(building_block['part']['designID'], str(
+                building_block['part']['material']), building_block['quantity'])
+            if lego_brick.color in substitutions:
+                f.write(f"{lego_brick.quantity} x {lego_brick.color} (substituted with {substitutions[lego_brick.color]})\n")
